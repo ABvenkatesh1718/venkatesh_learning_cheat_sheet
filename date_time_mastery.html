@@ -294,16 +294,28 @@
                     <td>Tracks minute values from 00 up through 59 (Capital M)</td>
                 </tr>
                 <tr>
-                    <td><strong>Day of Month (Numeric)</strong></td>
+                    <td><strong>Day of Month (Strict 2-Digit)</strong></td>
                     <td><span class="token">dd</span></td>
                     <td><span class="token">%d</span></td>
-                    <td>Outputs double-digit day coordinates (e.g., 24)</td>
+                    <td>Forces exactly double-digit width configurations (e.g., 05)</td>
                 </tr>
                 <tr>
-                    <td><strong>Month (Numeric representation)</strong></td>
+                    <td><strong>Day of Month (Flexible Variable)</strong></td>
+                    <td><span class="token">d</span></td>
+                    <td>See Python Pre-Pad Note</td>
+                    <td>Dynamically processes single or double digits without crashing (e.g., 5 or 24)</td>
+                </tr>
+                <tr>
+                    <td><strong>Month (Strict 2-Digit Numeric)</strong></td>
                     <td><span class="token">MM</span></td>
                     <td><span class="token">%m</span></td>
-                    <td>Outputs numeric month positions (e.g., 05 for May)</td>
+                    <td>Requires exactly double digits (e.g., 08). Crashes if single digit text is supplied.</td>
+                </tr>
+                <tr>
+                    <td><strong>Month (Flexible Variable Numeric)</strong></td>
+                    <td><span class="token">M</span></td>
+                    <td>See Python Pre-Pad Note</td>
+                    <td>Dynamically handles unpadded values without failing execution (e.g., 8 or 12)</td>
                 </tr>
                 <tr>
                     <td><strong>Month (Short Name text)</strong></td>
@@ -348,6 +360,7 @@
 <span class="keyword">import</span> java.time.Instant;
 <span class="keyword">import</span> java.time.ZoneId;
 <span class="keyword">import</span> java.time.ZonedDateTime;
+<span class="keyword">import</span> java.time.LocalDate;
 <span class="keyword">import</span> java.time.format.DateTimeFormatter;
 
 <span class="keyword">public class</span> <span class="type">DateTimePra</span> {
@@ -373,6 +386,21 @@
         <span class="comment">// 5. Retrieve deep metadata properties and use time-travel navigation</span>
         <span class="type">System</span>.out.println(<span class="string">"Day of Week    => "</span> + humanTime.getDayOfWeek());
         <span class="type">System</span>.out.println(<span class="string">"Time-Travel +5 => "</span> + humanTime.plusDays(<span class="comment">5</span>).format(dateTimeFormatter));
+        
+        <span class="comment">// 6. Execution Call for Variable-Width Text Parsing Sandbox</span>
+        <span class="type">String</span> parsedDay = findDay(<span class="comment">8</span>, <span class="comment">5</span>, <span class="comment">2015</span>);
+        <span class="type">System</span>.out.println(<span class="string">"Parsed Dynamic Day -> "</span> + parsedDay);
+    }
+
+    <span class="comment">/**
+     * Parsing Sandbox: Demonstrates dynamic width management.
+     * Single tokens 'M' and 'd' protect the engine from crashing on unpadded numbers.
+     */</span>
+    <span class="keyword">public static</span> <span class="type">String</span> findDay(<span class="keyword">int</span> month, <span class="keyword">int</span> day, <span class="keyword">int</span> year) {
+        <span class="type">DateTimeFormatter</span> flexibleFormatter = <span class="type">DateTimeFormatter</span>.ofPattern(<span class="string">"M d yyyy"</span>);
+        <span class="type">String</span> logTime = month + <span class="string">" "</span> + day + <span class="string">" "</span> + year;
+        <span class="keyword">final</span> <span class="type">LocalDate</span> parsedDateTime = <span class="type">LocalDate</span>.parse(logTime, flexibleFormatter);
+        <span class="keyword">return</span> parsedDateTime.getDayOfWeek().toString();      
     }
 }</code></pre>
             </div>
@@ -404,6 +432,21 @@
     <span class="comment"># 5. Navigate paths along the timeline using standard math symbols and timedelta</span>
     ten_days_later = human_time + timedelta(days=<span class="comment">10</span>)
     print(<span class="string">"Time-Travel +10   => "</span>, ten_days_later.strftime(pattern))
+    
+    <span class="comment"># 6. Execution Call for Platform-Independent Safe Padding Sandbox</span>
+    parsed_day = find_day(<span class="comment">8</span>, <span class="comment">5</span>, <span class="comment">2015</span>)
+    print(<span class="string">"Python Safe Day   => "</span>, parsed_day)
+
+<span class="comment">"""
+Parsing Sandbox: Implements the platform-independent production safeguard.
+F-string :02d forces numbers into strict widths to prevent parser crashes.
+"""</span>
+<span class="keyword">def</span> <span class="type">find_day</span>(month: <span class="keyword">int</span>, day: <span class="keyword">int</span>, year: <span class="keyword">int</span>) -> <span class="keyword">str</span>:
+    <span class="comment"># Convert dynamic integers (8, 5) safely into structured strings ("08 05 2015")</span>
+    log_time = f<span class="string">"{month:02d} {day:02d} {year}"</span>
+    log_layout = <span class="string">%m %d %Y"</span>
+    parsed_date = datetime.strptime(log_time, log_layout)
+    <span class="keyword">return</span> parsed_date.strftime(<span class="string">"%A"</span>).upper()
 
 <span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:
     execute_time_pipeline()</code></pre>
