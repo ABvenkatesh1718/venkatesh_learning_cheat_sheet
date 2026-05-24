@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Language Regex Mastery Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80;
+            --accent-purple: #c084fc;
+            --accent-orange: #f97316;
+            --border-color: #334155;
+            --code-bg: #0b0f19;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--accent-blue);
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .info-panel {
+            background: rgba(56, 189, 248, 0.06);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.25rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .syntax-title { color: var(--accent-blue); }
+        .magic-title { color: var(--accent-purple); }
+        .engine-title { color: var(--accent-orange); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .token {
+            font-family: "Fira Code", Consolas, Monaco, monospace;
+            background-color: var(--code-bg);
+            color: var(--accent-green);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .magic-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .magic-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .magic-heading {
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+
+        /* Language Tab Controls */
+        .tab-container {
+            margin-top: 2rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 6px 6px 0 0;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--text-main);
+            border-bottom: 3px solid var(--accent-blue);
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-top: 0.5rem;
+        }
+
+        code {
+            font-family: "Fira Code", Consolas, Monaco, monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        .lang-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            border-radius: 6px 6px 0 0;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .lang-header + pre {
+            margin-top: 0;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .keyword { color: #f43f5e; }
+        .type { color: #f59e0b; }
+        .string { color: #10b981; }
+        .comment { color: #64748b; font-style: italic; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Regular Expressions (Regex) Core Engineering Dashboard</h1>
+        <p class="subtitle">Cross-Language Compilation Blueprints & Advanced Token Manipulation Rules</p>
+    </header>
+
+    <!-- Core Engine Core Concepts Section -->
+    <div class="card" style="margin-bottom: 2rem;">
+        <h2 class="engine-title">🌐 The Anatomy of Regex: Concept Theory</h2>
+        <div class="subtitle" style="margin-bottom: 1rem;">Regular Expressions exist independently as a mathematical framework. Programming languages do not create regex; they implement specialized execution wrappers around it.</div>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem;">
+            <div style="background-color: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; border: 1px solid var(--border-color);">
+                <strong>⚙️ Engine vs. Flavor:</strong> The mathematical execution architecture is the <strong>Engine</strong>. Custom language enhancements are called <strong>Flavors</strong>. Java and Python both implement rules heavily inspired by the PCRE (Perl Compatible Regular Expressions) specification, meaning your structural pattern match logic remains highly portable between platforms.
+            </div>
+        </div>
+    </div>
+
+    <div class="info-panel">
+        <strong>💡 STRATEGIC MEMORY NODE:</strong> Enforce complete layout schema checking (True/False flags) via full string match mechanisms. Drop positional boundary anchors (<code class="token">^</code> and <code class="token">$</code>) and leverage structural token scanners when tracking target subsets hidden inside larger unstructured text blocks.
+    </div>
+
+    <div class="grid">
+        <!-- Core Syntax Card -->
+        <div class="card">
+            <h2 class="syntax-title">🛠️ Section 1: Core Syntax Blocks</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Token</th>
+                        <th>Execution Behavior</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Start Anchor</strong></td>
+                        <td><span class="token">^</span></td>
+                        <td>Locks verification checks to the absolute start of the row data stream.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End Anchor</strong></td>
+                        <td><span class="token">$</span></td>
+                        <td>Locks verification checks to the absolute termination boundary.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Character Class</strong></td>
+                        <td><span class="token">[abc]</span></td>
+                        <td>Evaluates to exactly ONE structural token match if it is a, b, or c.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Negation Class</strong></td>
+                        <td><span class="token">[^m]</span></td>
+                        <td><strong>NOT Operator:</strong> Accepts any unique token match except lowercase 'm'.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Digit Shorthand</strong></td>
+                        <td><span class="token">\\d</span></td>
+                        <td>Maps directly to <code>[0-9]</code>. Requires dual backslashes in Java.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wildcard</strong></td>
+                        <td><span class="token">.</span></td>
+                        <td>Evaluates successfully against any standard individual data index.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 1.5rem; font-size: 1.1rem; color: var(--text-muted);">Quantifier Controls</h3>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><span class="token">+</span></td>
+                        <td>1 or more times sequentially (Mandatory match criteria).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="token">*</span></td>
+                        <td>0 or more times sequentially (Optional pattern array stream).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="token">?</span></td>
+                        <td>0 or 1 time exclusively (Binary conditional modifier rule).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="token">{n}</span></td>
+                        <td>Forces match iterations to execute exactly 'n' times (e.g. <code>\\d{5}</code>).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Advanced Magic Card -->
+        <div class="card">
+            <h2 class="magic-title">🧙 Section 2: Advanced Set Operations</h2>
+            
+            <div class="magic-item">
+                <div class="magic-heading">1. Logical Intersection Layer (<span class="token">&&</span>)</div>
+                <div class="subtitle" style="font-size: 0.95rem; margin-bottom: 0.5rem;">Filters out elements unless they exist concurrently in both matrices.</div>
+                <div class="token" style="display: inline-block; margin-bottom: 0.5rem;">[aeiou&&[a-g]]</div>
+                <div class="subtitle" style="font-size: 0.85rem;">Resulting operational filter state matches only: <strong>a, e</strong></div>
+            </div>
+
+            <div class="magic-item">
+                <div class="magic-heading">2. Range Subtraction Matrix (<span class="token">&&[^...]</span>)</div>
+                <div class="subtitle" style="font-size: 0.95rem; margin-bottom: 0.5rem;">Cuts a hole out of a defined parent group dataset template.</div>
+                <div class="token" style="display: inline-block; margin-bottom: 0.5rem;">[a-z&&[^p-s]]</div>
+                <div class="subtitle" style="font-size: 0.85rem;">Matches any lowercase alpha letter, while explicitly blocking: <strong>p, q, r, s</strong></div>
+            </div>
+
+            <div class="magic-item">
+                <div class="magic-heading">3. Case-Insensitive Flag Switches</div>
+                <div class="subtitle" style="font-size: 0.95rem; margin-bottom: 0.5rem;">Automates upper and lower conversion schemas natively inside the compiler loop.</div>
+                <div style="margin-bottom: 0.5rem;"><span class="token">(?i)</span> <span style="font-size: 0.9rem; color: var(--text-muted);">Global Flag: Lowers case checking for all items to the right.</span></div>
+                <div style="margin-bottom: 0.5rem;"><span class="token">(?-i)</span> <span style="font-size: 0.9rem; color: var(--text-muted);">Deactivation Switch: Shuts OFF case insensitivity path rules instantly.</span></div>
+                <div><span class="token">(?i:pattern)</span> <span style="font-size: 0.9rem; color: var(--text-muted);">Scoped Wrapper: Disables case checks strictly for internal expressions.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Multi-Language Implementation Blocks -->
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchLang('java')">☕ Java Implementation</button>
+            <button class="tab-btn" onclick="switchLang('python')">🐍 Python Implementation</button>
+        </div>
+
+        <!-- Java Tab Content -->
+        <div id="java" class="tab-content active">
+            <div class="card" style="border-top-left-radius: 0; border-top-right-radius: 0;">
+                <div class="magic-heading">Blueprint A: Full Target String Schema Verification (True / False Filters)</div>
+                <div class="lang-header">InputValidator.java</div>
+<pre><code><span class="keyword">package</span> regression;
+
+<span class="keyword">public class</span> <span class="type">InputValidator</span> {
+    <span class="keyword">public static boolean</span> <span class="type">validateSchema</span>(<span class="type">String</span> emailInput) {
+        <span class="comment">// Enforces evaluation bounds from string start to termination limits</span>
+        <span class="type">String</span> structuralRegex = <span class="string">"^[a-z0-9.]+@gmail\\.com$"</span>;
+        <span class="keyword">return</span> emailInput.matches(structuralRegex); 
+    }
+}</code></pre>
+
+                <div class="magic-heading" style="margin-top: 2rem;">Blueprint B: Deep Content Stream Index Parsing (Token Multi-Harvesting Loop)</div>
+                <div class="lang-header">LogScanner.java</div>
+<pre><code><span class="keyword">package</span> regression;
+
+<span class="keyword">import</span> java.util.regex.<span class="type">Pattern</span>;
+<span class="keyword">import</span> java.util.regex.<span class="type">Matcher</span>;
+
+<span class="keyword">public class</span> <span class="type">LogScanner</span> {
+    <span class="keyword">public static void</span> <span class="type">harvestTargetTokens</span>(<span class="type">String</span> unformattedSystemLog) {
+        <span class="comment">// Example pattern utilizing both inline flag states: </span>
+        <span class="comment">// Starts insensitive on prefix, switch drops back to strict lowercase evaluation bounds.</span>
+        <span class="type">String</span> targetRegex = <span class="string">"(?i)TOKEN-(?-i)[a-z0-9&&[^p-s]]{4}"</span>; 
+
+        <span class="comment">// Step 1: Initialize the immutable engine with your targeting rule</span>
+        <span class="type">Pattern</span> structuralEngine = <span class="type">Pattern</span>.compile(targetRegex);
+        
+        <span class="comment">// Step 2: Pass raw dataset to construct the index scanning slider interface</span>
+        <span class="type">Matcher</span> trackingCursor = structuralEngine.matcher(unformattedSystemLog);
+
+        <span class="comment">// Step 3: Loop iteration pushes cursor forward until evaluations equal false</span>
+        <span class="keyword">while</span> (trackingCursor.find()) { 
+            <span class="comment">// Cursor freezes safely at match index point. Extract payload string instantly:</span>
+            <span class="type">String</span> extractedPayload = trackingCursor.group(); 
+            <span class="type">System</span>.out.println(<span class="string">"Harvested Automation Payload: "</span> + extractedPayload);
+        }
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- Python Tab Content -->
+        <div id="python" class="tab-content">
+            <div class="card" style="border-top-left-radius: 0; border-top-right-radius: 0;">
+                <div class="magic-heading">Blueprint A: Full Target String Schema Verification (True / False Filters)</div>
+                <div class="lang-header">input_validator.py</div>
+<pre><code><span class="keyword">import</span> re
+
+<span class="keyword">def</span> <span class="type">validate_schema</span>(email_input):
+    <span class="comment"># Note: 'r' prefix declares a Raw String, ensuring backslashes are passed unmodified to the engine</span>
+    structural_regex = <span class="string">r"^[a-z0-9.]+@gmail\.com$"</span>
+    
+    <span class="comment"># re.fullmatch ensures exact string matching from boundary to boundary</span>
+    <span class="keyword">if</span> re.fullmatch(structural_regex, email_input):
+        <span class="keyword">return</span> <span class="keyword">True</span>
+    <span class="keyword">else</span>:
+        <span class="keyword">return</span> <span class="keyword">False</span></code></pre>
+
+                <div class="magic-heading" style="margin-top: 2rem;">Blueprint B: Deep Content Stream Index Parsing (Token Multi-Harvesting Loop)</div>
+                <div class="lang-header">log_scanner.py</div>
+<pre><code><span class="keyword">import</span> re
+
+<span class="keyword">def</span> <span class="type">harvest_target_tokens</span>(unformatted_system_log):
+    <span class="comment"># Python implementation utilizes explicit flags or standard string syntax</span>
+    <span class="comment"># Note: Standard python syntax handles case switches seamlessly using inline modifier syntax</span>
+    target_regex = <span class="string">r"(?i)TOKEN-(?-i)[a-z0-9]"</span> <span class="comment"># Note: Python uses set subtraction via lookaheads if needed</span>
+    
+    <span class="comment"># Alternative simple token extraction example pattern:</span>
+    simplified_regex = <span class="string">r"BUG-\d+"</span>
+    
+    count = <span class="comment">0</span>
+    <span class="comment"># re.finditer handles scanning iteration. Replaces the Java while(matcher.find()) control block</span>
+    <span class="keyword">for</span> tracking_cursor <span class="keyword">in</span> re.finditer(simplified_regex, unformatted_system_log):
+        count += <span class="comment">1</span>
+        <span class="comment"># tracking_cursor.group() accesses captured data indexes exactly like Java Matcher</span>
+        extracted_payload = tracking_cursor.group()
+        print(<span class="string">f"Harvested Automation Payload: {extracted_payload}"</span>)</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchLang(langId) {
+        // Toggle tab button states
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        
+        // Toggle code section content view visibility
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(langId).classList.add('active');
+    }
+</script>
+
+</body>
+</html>
