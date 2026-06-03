@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptitude Fractions Master Reference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a; /* Deep Slate Background */
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .master-board {
+            background-color: #1e293b; /* Slate Board Container */
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .board-grid {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 24px;
+            overflow-x: auto;
+        }
+        /* Keep previous 5-column layout structure */
+        .family-column {
+            min-width: 220px;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Group Box that wraps specific numbers with space at the top for the absolute badge */
+        .family-group-box {
+            border: 2px solid #475569;
+            border-radius: 12px;
+            background-color: #1a2333;
+            margin-bottom: 24px;
+            padding-top: 14px; /* Creates clean space for the overlapping label */
+            position: relative;
+            overflow: visible; /* Allows the badge label to pop out cleanly */
+            display: flex;
+            flex-direction: column;
+        }
+        /* Eye-attracting Family Label badge placed perfectly on the top border line */
+        .family-badge {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Shifts up exactly onto the border line line */
+            background-color: #38bdf8; /* Premium Sky Blue for crisp contrast */
+            color: #0f172a; /* Deep text for absolute clarity */
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(56, 189, 248, 0.25);
+            white-space: nowrap;
+        }
+        /* Clean row-level horizontal borders inside the family groups */
+        .family-item {
+            padding: 14px 20px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            text-align: center;
+            color: #f8fafc;
+            white-space: nowrap;
+            border-bottom: 1px solid #334155;
+            transition: background-color 0.2s ease;
+        }
+        /* Remove border from the last row inside a box */
+        .family-item:last-child {
+            border-bottom: none;
+        }
+        /* Line tracing highlight behavior */
+        .family-item:hover {
+            background-color: #243249; 
+            color: #38bdf8 !important; /* Highlights text color on hover for visual aid */
+        }
+        .empty-dash {
+            color: #475569;
+            font-weight: 400;
+            text-align: center;
+            padding: 14px 20px;
+            font-size: 1.35rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xxl-11">
+            
+            <div class="master-board">
+                <div class="board-grid">
+                    
+                    <div class="family-column">
+                        <div class="family-group-box">
+                            <span class="family-badge">/2 Family</span>
+                            <div class="family-item">1/2 = 50%</div>
+                        </div>
+                        
+                        <div class="family-group-box">
+                            <span class="family-badge">/3 Family</span>
+                            <div class="family-item">1/3 = 33.33%</div>
+                            <div class="family-item">2/3 = 66.66%</div>
+                        </div>
+                        
+                        <div class="family-group-box">
+                            <span class="family-badge">/4 Family</span>
+                            <div class="family-item">1/4 = 25%</div>
+                            <div class="family-item">3/4 = 75%</div>
+                        </div>
+                        
+                        <div class="family-group-box">
+                            <span class="family-badge">/5 Family</span>
+                            <div class="family-item">1/5 = 20%</div>
+                            <div class="family-item">2/5 = 40%</div>
+                            <div class="family-item">3/5 = 60%</div>
+                            <div class="family-item">4/5 = 80%</div>
+                        </div>
+                        <div class="empty-dash">-</div>
+                        <div class="empty-dash">-</div>
+                    </div>
+
+                    <div class="family-column">
+                        <div class="family-group-box">
+                            <span class="family-badge">/6 Family</span>
+                            <div class="family-item">1/6 = 16.66%</div>
+                            <div class="family-item">5/6 = 83.33%</div>
+                        </div>
+                        
+                        <div class="family-group-box">
+                            <span class="family-badge">/7 Family</span>
+                            <div class="family-item">1/7 = 14.28%</div>
+                            <div class="family-item">2/7 = 28.57%</div>
+                            <div class="family-item">3/7 = 42.85%</div>
+                            <div class="family-item">4/7 = 57.14%</div>
+                            <div class="family-item">5/7 = 71.42%</div>
+                            <div class="family-item">6/7 = 85.71%</div>
+                        </div>
+                        <div class="empty-dash">-</div>
+                        <div class="empty-dash">-</div>
+                        <div class="empty-dash">-</div>
+                    </div>
+
+                    <div class="family-column">
+                        <div class="family-group-box">
+                            <span class="family-badge">/8 Family</span>
+                            <div class="family-item">1/8 = 12.5%</div>
+                            <div class="family-item">3/8 = 37.5%</div>
+                            <div class="family-item">5/8 = 62.5%</div>
+                            <div class="family-item">7/8 = 87.5%</div>
+                        </div>
+                        
+                        <div class="family-group-box">
+                            <span class="family-badge">/12 Family</span>
+                            <div class="family-item">1/12 = 8.33%</div>
+                            <div class="family-item">5/12 = 41.66%</div>
+                            <div class="family-item">7/12 = 58.33%</div>
+                            <div class="family-item">11/12 = 91.66%</div>
+                        </div>
+                        <div class="empty-dash">-</div>
+                        <div class="empty-dash">-</div>
+                        <div class="empty-dash">-</div>
+                    </div>
+
+                    <div class="family-column">
+                        <div class="family-group-box">
+                            <span class="family-badge">/9 Family</span>
+                            <div class="family-item">1/9 = 11.11%</div>
+                            <div class="family-item">2/9 = 22.22%</div>
+                            <div class="family-item">3/9 = 33.33%</div>
+                            <div class="family-item">4/9 = 44.44%</div>
+                            <div class="family-item">5/9 = 55.55%</div>
+                            <div class="family-item">6/9 = 66.66%</div>
+                            <div class="family-item">7/9 = 77.77%</div>
+                            <div class="family-item">8/9 = 88.88%</div>
+                        </div>
+                        
+                        <div class="family-group-box">
+                            <span class="family-badge">/10 Family</span>
+                            <div class="family-item">1/10 = 10%</div>
+                            <div class="family-item">2/10 = 20%</div>
+                            <div class="family-item">3/10 = 30%</div>
+                        </div>
+                    </div>
+
+                    <div class="family-column">
+                        <div class="family-group-box">
+                            <span class="family-badge">/11 Family</span>
+                            <div class="family-item">1/11 = 9.09%</div>
+                            <div class="family-item">2/11 = 18.18%</div>
+                            <div class="family-item">3/11 = 27.27%</div>
+                            <div class="family-item">4/11 = 36.36%</div>
+                            <div class="family-item">5/11 = 45.45%</div>
+                            <div class="family-item">6/11 = 54.54%</div>
+                            <div class="family-item">7/11 = 63.63%</div>
+                            <div class="family-item">8/11 = 72.72%</div>
+                            <div class="family-item">9/11 = 81.81%</div>
+                            <div class="family-item">10/11 = 90.90%</div>
+                        </div>
+                        <div class="empty-dash">-</div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
