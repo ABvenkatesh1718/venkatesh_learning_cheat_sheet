@@ -12,46 +12,50 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
+            padding: 20px 0;
         }
         .master-board {
             background-color: #1e293b; /* Slate Board Container */
-            padding: 30px;
+            padding: 40px 24px;
             border-radius: 20px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            width: 100%;
         }
+        /* Fixed Grid Layout: Changes from row-flex to a perfect responsive grid */
         .board-grid {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 24px;
-            overflow-x: auto;
+            display: grid;
+            /* Creates 5 columns on big screens, drops to fewer columns cleanly on small screens */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
         }
-        /* Keep previous 5-column layout structure */
+        /* The standard column containers */
         .family-column {
-            min-width: 220px;
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
-        /* Group Box that wraps specific numbers with space at the top for the absolute badge */
+        /* Group Box that wraps specific numbers */
         .family-group-box {
             border: 2px solid #475569;
             border-radius: 12px;
             background-color: #1a2333;
             margin-bottom: 24px;
-            padding-top: 14px; /* Creates clean space for the overlapping label */
+            padding-top: 14px; 
             position: relative;
-            overflow: visible; /* Allows the badge label to pop out cleanly */
+            overflow: visible; 
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
         /* Eye-attracting Family Label badge placed perfectly on the top border line */
         .family-badge {
             position: absolute;
             top: 0;
             left: 50%;
-            transform: translate(-50%, -50%); /* Shifts up exactly onto the border line line */
-            background-color: #38bdf8; /* Premium Sky Blue for crisp contrast */
-            color: #0f172a; /* Deep text for absolute clarity */
+            transform: translate(-50%, -50%); 
+            background-color: #38bdf8; 
+            color: #0f172a; 
             font-size: 0.8rem;
             font-weight: 800;
             text-transform: uppercase;
@@ -63,8 +67,8 @@
         }
         /* Clean row-level horizontal borders inside the family groups */
         .family-item {
-            padding: 14px 20px;
-            font-size: 1.35rem;
+            padding: 12px 10px; /* Reduced padding slightly to prevent squeezing text */
+            font-size: 1.25rem; /* Sized perfectly for high visibility without crowding */
             font-weight: 700;
             text-align: center;
             color: #f8fafc;
@@ -79,22 +83,19 @@
         /* Line tracing highlight behavior */
         .family-item:hover {
             background-color: #243249; 
-            color: #38bdf8 !important; /* Highlights text color on hover for visual aid */
+            color: #38bdf8 !important; 
         }
+        /* Hides the structural empty placeholder dashes on live web layouts */
         .empty-dash {
-            color: #475569;
-            font-weight: 400;
-            text-align: center;
-            padding: 14px 20px;
-            font-size: 1.35rem;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-<div class="container-fluid my-5">
+<div class="container-fluid px-4">
     <div class="row justify-content-center">
-        <div class="col-12 col-xxl-11">
+        <div class="col-12">
             
             <div class="master-board">
                 <div class="board-grid">
@@ -124,8 +125,6 @@
                             <div class="family-item">3/5 = 60%</div>
                             <div class="family-item">4/5 = 80%</div>
                         </div>
-                        <div class="empty-dash">-</div>
-                        <div class="empty-dash">-</div>
                     </div>
 
                     <div class="family-column">
@@ -144,9 +143,6 @@
                             <div class="family-item">5/7 = 71.42%</div>
                             <div class="family-item">6/7 = 85.71%</div>
                         </div>
-                        <div class="empty-dash">-</div>
-                        <div class="empty-dash">-</div>
-                        <div class="empty-dash">-</div>
                     </div>
 
                     <div class="family-column">
@@ -165,9 +161,6 @@
                             <div class="family-item">7/12 = 58.33%</div>
                             <div class="family-item">11/12 = 91.66%</div>
                         </div>
-                        <div class="empty-dash">-</div>
-                        <div class="empty-dash">-</div>
-                        <div class="empty-dash">-</div>
                     </div>
 
                     <div class="family-column">
@@ -205,7 +198,6 @@
                             <div class="family-item">9/11 = 81.81%</div>
                             <div class="family-item">10/11 = 90.90%</div>
                         </div>
-                        <div class="empty-dash">-</div>
                     </div>
 
                 </div>
