@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Frequency-Based Custom Sorting</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #334155;
+            --primary-color: #2563eb;
+            --secondary-color: #0f172a;
+            --accent-color: #0284c7;
+            --border-color: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            margin-top: 25px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #0f172a;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+        }
+
+        .highlight-box {
+            background-color: #eff6ff;
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .tag-desc {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        .tag-asc {
+            color: #22c55e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Mastering Frequency-Based Custom Sorting</h1>
+            <div class="subtitle">A Comprehensive Interview Reference Guide for Python & Java</div>
+        </header>
+
+        <section class="card">
+            <h2>1. The Algorithmic Strategy</h2>
+            <p>Whenever an interview problem requires you to sort elements based on their frequencies (e.g., "Sort characters by frequency" or "Find the 2nd most frequent element"), always employ a strict two-step execution pattern to balance runtime speed and memory footprint:</p>
+            <ol>
+                <li><strong>The Counting Phase:</strong> Scan through the data collection once to construct a Frequency Map. This takes <code>O(N)</code> time.</li>
+                <li><strong>The Custom Sorting Phase:</strong> Extract the unique entries from the map and sort them using multi-level tie-breaker configurations. This takes <code>O(K log K)</code> time (where K is the number of unique elements).</li>
+            </ol>
+            <div class="highlight-box">
+                <strong>Complexity Overview:</strong> Total Time: <code>O(N + K log K)</code> | Total Space: <code>O(K)</code> to safely hold unique items.
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>2. The Python Implementation</h2>
+            <p>Python leverages tuples <code>(Priority_1, Priority_2)</code> to evaluate chain-of-command rules. Python inherently sorts from smallest to largest (left-to-right on a number line).</p>
+            
+            <h3>The Negative Sign Trick</h3>
+            <p>By prepending a minus sign (<code>-freq</code>) to a numeric element inside a tuple, you flip its position on the number line. This effortlessly tricks Python into sorting that specific parameter in <span class="tag-desc">Descending (Highest First)</span> order while keeping other parameters <span class="tag-asc">Ascending (Smallest First)</span>.</p>
+
+            <h3>Optimized Source Code (List Return)</h3>
+            <pre><code>class Solution:
+    def custom_sort(self, item):
+        # item[0] is Key (Char/Num), item[1] is Value (Frequency)
+        return (-item[1], item[0]) # (-Freq = Descending, Key = Ascending)
+
+    def frequencySort(self, s: str) -> list:
+        freq_map = {}
+        for ch in s:
+            freq_map[ch] = freq_map.get(ch, 0) + 1
+        
+        # Sort extracting dictionary items directly
+        sorted_pairs = sorted(freq_map.items(), key=self.custom_sort)
+        
+        # Space-optimized output compilation using list multiplication 
+        sorted_list = []
+        for ch, freq in sorted_pairs:
+            sorted_list.extend([ch] * freq)
+            
+        return sorted_list</code></pre>
+        </section>
+
+        <section class="card">
+            <h2>3. The Java Implementation</h2>
+            <p>Java maps cannot be sorted directly, requiring a conversion into a Stream layout via <code>freqMap.entrySet().stream()</code> to treat key-value configurations as <code>Map.Entry</code> rows.</p>
+            
+            <h3>The Safety of <code>compareTo()</code> & Ternary Filters</h3>
+            <p>Using basic arithmetic operations (such as <code>b - a</code>) on <code>Long</code> or composite data wrapper types forces compilation panics labeled <em>"possible lossy conversion"</em>. Using <code>.compareTo()</code> avoids this cleanly because it acts as an evaluated comparison method that always returns a standard primitive <code>int</code> (<code>-1</code>, <code>0</code>, or <code>1</code>).</p>
+
+            <h3>Optimized Source Code (Ternary Operator Stream)</h3>
+            <pre><code>import java.util.*;
+import java.util.stream.Collectors;
+
+class Solution {
+    public List&lt;Character&gt; frequencySort(String s) {
+        // 1. Build out the tracking HashMap
+        Map&lt;Character, Long&gt; freqMap = new HashMap&lt;&gt;();
+        for (int i = 0; i &lt; s.length(); i++) {
+            char ch = s.charAt(i);
+            freqMap.put(ch, freqMap.getOrDefault(ch, 0L) + 1);
+        }
+
+        // 2. Multi-tier inline sorting via Stream and Ternary expressions
+        List&lt;Map.Entry&lt;Character, Long&gt;&gt; sortedPairs = freqMap.entrySet().stream()
+            .sorted((a, b) -> !a.getValue().equals(b.getValue())
+                ? b.getValue().compareTo(a.getValue())  // Primary: Freq Descending (b to a)
+                : a.getKey().compareTo(b.getKey())      // Secondary Tie-breaker: Key Ascending (a to b)
+            )
+            .collect(Collectors.toList());
+
+        // 3. Flatten entries down into a repeated array sequence
+        List&lt;Character&gt; sortCharList = new ArrayList&lt;&gt;();
+        for (Map.Entry&lt;Character, Long&gt; entry : sortedPairs) {
+            long freq = entry.getValue();
+            for (int i = 0; i &lt; freq; i++) {
+                sortCharList.add(entry.getKey());
+            }
+        }
+        return sortCharList;
+    }
+}</code></pre>
+        </section>
+
+        <section class="card">
+            <h2>4. Essential Interview Core Concepts</h2>
+            
+            <h3>The "Second-Highest Frequency" Skip Loop</h3>
+            <p>When searching for the 2nd most frequent element instead of spitting out a sorted sequence, capture the top-tier winner from index position zero: <code>highestFreq = sortedPairs.get(0).getValue()</code>. Then loop down the list to skip ties. The first element to satisfy <code>freq &lt; highestFreq</code> is organically your target.</p>
+
+            <h3>Comparable vs. Comparator Definition Guide</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Comparable Interface</th>
+                        <th>Comparator Interface</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Core Identity</strong></td>
+                        <td>Defines <em>Internal / Natural</em> sorting order inside an object's own class.</td>
+                        <td>Defines <em>External / Custom</em> standalone rules to analyze variables dynamically.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Method Signature</strong></td>
+                        <td><code>compareTo(this, other)</code> &rarr; Expects <strong>1</strong> outside parameter.</td>
+                        <td><code>compare(a, b)</code> &rarr; Expects <strong>2</strong> outside parameters to referee.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structural Setup</strong></td>
+                        <td>Modifies and limits the core blueprint to one single uniform default behavior.</td>
+                        <td>Allows endless layout permutations (e.g., Lambdas) without touching basic classes.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+</body>
+</html>
