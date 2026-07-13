@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Docker Commands Cheat Sheet</title>
+    <style>
+        body {
+            background-color: #191d28;
+            color: #d1dbede6; /* High contrast bright text for regular description labels */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .main-title {
+            color: #2c8fb6;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .subtitle {
+            color: #a0aec0; /* Significantly brighter contrast subtitle text */
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #283141;
+            margin-bottom: 30px;
+        }
+        .safeguard-box {
+            background-color: #2b2524;
+            border-left: 4px solid #e67e22;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            color: #fbd38d; /* Bright amber color text for visibility */
+            font-size: 0.95rem;
+        }
+        .safeguard-box strong {
+            color: #e67e22;
+        }
+        .safeguard-box code {
+            background-color: #1c1917;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #2c8fb6;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #222834;
+            border-radius: 6px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .card-header {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #ffffff; /* pure crisp white for readable headlines */
+            margin-bottom: 12px;
+            display: flex;
+            align-items: baseline;
+        }
+        .card-number {
+            color: #2c8fb6; /* Changed to the vibrant accent color for better hierarchy visibility */
+            margin-right: 8px;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+        .command-group {
+            margin-bottom: 12px;
+        }
+        .label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #cbd5e0; /* High contrast label indicator */
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .code-block {
+            background-color: #161a23;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.95rem;
+            color: #2c8fb6; /* Main dynamic command color kept vibrant */
+            word-break: break-all;
+            display: block;
+            border: 1px solid #2e3748;
+        }
+        .example-block {
+            color: #48bb78; /* Clean vibrant green specifically for code examples to pop distinctively */
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="main-title">Docker Commands Cheat Sheet</h1>
+    <div class="subtitle">Useful for sharing or running projects smoothly without dependency worries.</div>
+    
+    <hr>
+
+    <div class="safeguard-box">
+        <strong>💡 ENVIRONMENT PRESETS FOR EXAMPLES:</strong> Assuming local environment has an existing image named <code>"mysql"</code> or <code>"python-app"</code>, and a running container instance named <code>"python-app"</code>.
+    </div>
+
+    <div class="grid-container">
+        <!-- 1 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">1)</span> Check Docker Installed Version</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker --version</span>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">2)</span> Check Docker System Information</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker info</span>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">3)</span> View Help Guidelines</div>
+            <div class="command-group">
+                <span class="label">Command Templates</span>
+                <span class="code-block">docker --help<br>docker logs --help<br>docker pull --help</span>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">4)</span> Search Registry For Specific Images</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker search &lt;image_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker search mysql</span>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">5)</span> Pull Image from Central Registry to Local</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker pull &lt;image_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker pull mysql</span>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">6)</span> Check Pulled Local Docker Images</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker image</span>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">7)</span> Delete / Remove Local Image</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker rmi &lt;image_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker rmi mysql</span>
+            </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">8)</span> Run Image (Start a Container Interactively)</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker run &lt;image_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker run mysql</span>
+            </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">9)</span> Run Image in Detached Mode (Background)</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker run -d &lt;image_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker run -d mysql</span>
+            </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">10)</span> Check Actively Running Containers</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker container ls</span>
+            </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">11)</span> Check All Existing Containers (Running + Stopped)</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker container ls -a</span>
+            </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">12)</span> Expose Port Mapping (Host Network to Container Network)</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker run -p hosting-port:network-port &lt;image_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker run -p 8080:8080 java-app</span>
+            </div>
+        </div>
+
+        <!-- 13 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">13)</span> Run Container Assigned with Specific Name</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker run --name &lt;custom_container_name&gt; &lt;image_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker run --name "python-app" python-app</span>
+            </div>
+        </div>
+
+        <!-- 14 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">14)</span> Review Background Detached Container Logs</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker logs &lt;container_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker logs mysql</span>
+            </div>
+        </div>
+
+        <!-- 15 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">15)</span> Live Stream/Monitor Logs Follow Mode</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker logs -f &lt;container_id_or_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker logs -f "python-app"</span>
+            </div>
+        </div>
+
+        <!-- 16 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">16)</span> Start a Existing Stopped Container</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker start &lt;container_id_or_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker start "python-app"</span>
+            </div>
+        </div>
+
+        <!-- 17 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">17)</span> Stop / Terminate Running Container</div>
+            <div class="command-group">
+                <span class="label">Graceful Stop Template (Allows graceful shutdown cleanup time)</span>
+                <span class="code-block">docker stop &lt;container_id_or_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Immediate Kill Template (Forces direct application termination)</span>
+                <span class="code-block">docker kill &lt;container_id_or_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Executions</span>
+                <span class="code-block example-block">docker stop "python-app"<br>docker kill "python-app"</span>
+            </div>
+        </div>
+
+        <!-- 18 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">18)</span> Restart Container Process</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker restart &lt;container_id_or_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker restart "python-app"</span>
+            </div>
+        </div>
+
+        <!-- 19 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">19)</span> Remove / Delete Stopped Container Instance</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker rm &lt;container_id_or_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker rm "python-app"</span>
+            </div>
+        </div>
+
+        <!-- 20 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">20)</span> Build Custom Docker Image via Dockerfile</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker build -t &lt;image_name&gt;:&lt;version&gt; .</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker build -t "java-sample-app":1.0.0 .</span>
+            </div>
+        </div>
+
+        <!-- 21 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">21)</span> Clean / Prune Unused Containers and Images</div>
+            <div class="command-group">
+                <span class="label">Command Templates</span>
+                <span class="code-block">docker container prune<br>docker image prune</span>
+            </div>
+        </div>
+
+        <!-- 22 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">22)</span> Remove Unused System-Level Resources Completely</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker system prune</span>
+            </div>
+        </div>
+
+        <!-- 23 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">23)</span> Inspect General Engine Disk Usage Data</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker system df</span>
+            </div>
+        </div>
+
+        <!-- 24 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">24)</span> View Execution History Layers of an Image</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker image history &lt;image_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker image history mysql</span>
+            </div>
+        </div>
+
+        <!-- 25 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">25)</span> Monitor CPU & Memory Utilization Statistics</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker stats &lt;container_id_or_name&gt;</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker stats "python-app"</span>
+            </div>
+        </div>
+
+        <!-- 26 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">26)</span> Run Container with Specific Resource Limitations</div>
+            <div class="command-group">
+                <span class="label">Command Template (-m: Max Memory Allocation limit | --cpu-quota: Maximum CPU quota limit where 100,000 is 100% core)</span>
+                <span class="code-block">docker container run -m 500m --cpu-quota=50000 &lt;image_name&gt;</span>
+            </div>
+        </div>
+
+        <!-- 27 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">27)</span> Access Shell (Bash Terminal) of Active Container</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker exec -it &lt;container_name_or_id&gt; bash</span>
+            </div>
+            <div class="command-group">
+                <span class="label">Example Execution</span>
+                <span class="code-block example-block">docker exec -it mysql bash</span>
+            </div>
+        </div>
+
+        <!-- 28 -->
+        <div class="card">
+            <div class="card-header"><span class="card-number">28)</span> Show Detailed Breakdown Disk Space Usage</div>
+            <div class="command-group">
+                <span class="label">Command Template</span>
+                <span class="code-block">docker system df</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
